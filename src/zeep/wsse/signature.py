@@ -19,8 +19,12 @@ from zeep.wsse.utils import ensure_id, get_security_header
 try:
     import xmlsec
 except ImportError:
-    xmlsec = None
+    try:
+        from lambda_packages import lambda_packages
 
+        xmlsec = lambda_packages['xmlsec']
+    except ImportError:
+        xmlsec = None
 
 # SOAP envelope
 SOAP_NS = "http://schemas.xmlsoap.org/soap/envelope/"
